@@ -1,0 +1,96 @@
+\documentclass[14pt, oneside]{extarticle} 
+\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphics, geometry}
+\renewcommand{\familydefault}{\sfdefault}
+
+\geometry{tmargin=.75in, bmargin=.75in, lmargin=.75in, rmargin = .75in}  
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Cdot}{\boldsymbol{\cdot}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{conv}{Convention}
+\newtheorem{rem}{Remark}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+
+
+\title{A review of existings datasets with microphone array recordings}
+\author{Iran R. Roman \thanks{roman@nyu.edu}}
+\affil{Music and Audio Research Laboratory, New York University}
+\date{March 2021}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\vspace{.25in}
+
+\section{Introduction}
+
+\subsection{Background}
+
+\begin{itemize}
+
+\item Object localization and tracking allow intelligent agents to determine whether something is moving, in which direction, and how fast. 
+
+\item From an evolutionary standpoint, object localization and tracking are essential for survival \cite{heffner2018evolution}.
+
+\item Sound localization and tracking are fundamental problems of machine listening technologies.
+
+\item Without these capabilities, {\it listening machines} cannot locate living beings and objects by the sounds they make. 
+
+\end{itemize}
+
+\subsection{Problem statement}
+
+\begin{itemize}
+
+\item Current machine listening models learn sound localization and tracking using a specific microphone array configuration. 
+
+\item To add or remove channels in the data, the model architecture must be changed and retrained, at least at the level of the input layer.
+
+\end{itemize}
+
+\subsection{Proposed solution}
+
+\begin{itemize}
+
+\item Microphone arrays come in all sizes and shapes \cite{kurz2015comparison, bates2017comparing, lopez2019sphear}. 
+
+\item We should not think of individual microphone array configurations as mutually exclusive.
+
+\item Instead, we can think of them as a subset of an idealized spherical array with an infinite number of channels.
+
+\item The idealized spherical array contains microphones at all positions within the sphere and facing all possible directions of arrival.
+
+\item For each microphone in an existing array, we know its signal captured, position, directionality, and frequency response. 
+
+\item By combining information across microphone arrays, we can interpolate and approximate the idal spherical array.
+
+\end{itemize}
+
+\subsection{Scope of this review}
+
+\being{itemize}
+
+\item First, we describe the importance of microphone arrays for 3D audio.
+
+\item Then, we review the technical specifications of commonly used microphone arrays.
+
+\item Next, we present an overview of existing datasets with microphone arrays.
+
+\item Finally, we discuss methodologies to exploit these datasets with the goal of approximating the idealized spherical array.  
+
+\end{itemize}
+
+\bibliography{references}
+\bibliographystyle{plain}
+
+
+\end{document}
