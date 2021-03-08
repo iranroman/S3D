@@ -37,13 +37,13 @@
 
 \begin{itemize}
 
-\item Object localization and tracking allow intelligent agents to determine whether something is moving, in which direction, and how fast. 
+\item Localization and tracking allow intelligent agents to determine if objects are moving, in which direction, and how fast. 
 
 \item From an evolutionary standpoint, object localization and tracking are essential for survival \cite{heffner2018evolution}.
 
 \item Sound localization and tracking are fundamental problems of machine listening technologies.
 
-\item Without these capabilities, {\it listening machines} cannot locate living beings and objects by the sounds they make. 
+\item Without these capabilities, {\it listening machines} cannot locate living beings and objects in their environment by the sounds they make. 
 
 \end{itemize}
 
@@ -65,32 +65,64 @@
 
 \item We should not think of individual microphone array configurations as mutually exclusive.
 
-\item Instead, we can think of them as a subset of an idealized spherical array with an infinite number of channels.
+\item Instead, we can think of them as a subset of a virtual with an infinite number of channels.
 
-\item The idealized spherical array contains microphones at all positions within the sphere and facing all possible directions of arrival.
+\item The virtual array is spherical in shape, and contains microphones at all positions and facing all possible directions of arrival.
 
 \item For each microphone in an existing array, we know its signal captured, position, directionality, and frequency response. 
 
-\item By combining information across microphone arrays, we can interpolate and approximate the idal spherical array.
+\item By combining information across microphone arrays, we can interpolate and approximate the virtual array.
 
 \end{itemize}
 
-\subsection{Scope of this review}
+\section{Scope of this review}
 
-\being{itemize}
+\begin{itemize}
 
-\item First, we describe the importance of microphone arrays for 3D audio.
+\item This document has two goals:
+	\begin{itemize}
+	\item To identify existing audio datasets collected with microphone arrays. 
+	\item To discuss whether they can be used to approximate the virtual array. 
+	\end{itemize}
+
+\item First, we describe the importance of microphone arrays for object localization and tracking.
 
 \item Then, we review the technical specifications of commonly used microphone arrays.
 
 \item Next, we present an overview of existing datasets with microphone arrays.
 
-\item Finally, we discuss methodologies to exploit these datasets with the goal of approximating the idealized spherical array.  
+\item Finally, we discuss methodologies to exploit these datasets with the goal of approximating the virtual array.  
 
 \end{itemize}
 
+\section{Microphone arrays for auditory object localization and tracking}
+
+\subsection{Auditory object localization and tracking}
+
+\begin{itemize}
+
+\item Intelligent organisms rely on sensory cues to interact with objects in their environment. 
+
+\item Several mammalian species can localize and track objects based on the sounds they make.
+
+\item To do this, they rely on mechanisms of \cite{grothe2010mechanisms}:
+	\begin{itemize}
+	\item Monoaural cues (spectral analysis)
+	\item Interaural time difference
+	\item Interaural level difference
+	\end{itemize}
+
+\item Evolution also gave rise to other mechanisms for sound localization and tracking, including \cite{grothe2010mechanisms}: 
+	\begin{itemize}
+	\item Particle motion detection in fish 
+	\item Processing of interfering patterns reaching the tympanum in frogs and birds
+	\end{itemize}
+
+\end{itemize}
+
+\subsection{The need for microphone arrays}
+
 \bibliography{references}
 \bibliographystyle{plain}
-
 
 \end{document}
