@@ -95,8 +95,7 @@
 
 \end{itemize}
 
-\section{Microphone arrays for auditory object localization and tracking}
-
+\section{Object localization and tracking with microphone arrays}
 \subsection{Auditory object localization and tracking}
 
 \begin{itemize}
@@ -105,7 +104,7 @@
 
 \item Several mammalian species can localize and track objects based on the sounds they make.
 
-\item To do this, they rely on mechanisms of \cite{grothe2010mechanisms}:
+\item To do this, many animals rely on their ears (two auditory inputs) and mechanisms of \cite{grothe2010mechanisms}:
 	\begin{itemize}
 	\item Monoaural cues (spectral analysis)
 	\item Interaural time difference
@@ -121,6 +120,72 @@
 \end{itemize}
 
 \subsection{The need for microphone arrays}
+
+\begin{itemize}
+
+\item Many mammals are able to localize and track auditory objects in their enviroment using only two ears.
+
+\item While a microphone array can have just two microphones, most have four or more. 
+
+\item Why do we need microphone arrays to carry out the same task that many animals carry out with two ears?
+
+\item There two main technical problems with binaural source localization in machines \cite{kim2015improved}:
+	\begin{itemize}
+	\item Diffraction of sound waves around the agent's head
+	\item Front back ambiguity
+	\end{itemize}
+
+\item To overcome these issues, it is necessary to move the ears and head (like humans naturally do) and filter inputs with specific head-related transfer functions.
+
+\item In other words, the machine has to listen more like a biological agent.
+	
+\item From an engineering stand-point, the issue can be solved using microphone arrays, which add spatial and auditory information. 
+
+\item In machine listening, microphone arrays have been shown to be the optimal solution to carrying out sond source localization and tracking.
+
+\item In general, the larger the number of microphones in an array, the better sound source localization results \cite{valin2007robust}.
+
+\end{itemize}
+
+\section{Commonly used microphone arrays}
+
+\section{Existing datasets with microphone arrays}
+
+\begin{itemize}
+
+\subsection{Lee and Johnson, 2019}
+
+\item 3D sound recordings of musical performances and room impulse responses.
+
+\item Venue: St. Paul's concert hall (Huddersfield, UK)
+
+\item Microphone arrays used simultaneously:
+	\begin{itemize}
+	\item OCT-3D
+	\item 2L-Cube
+	\item PCMA-3D
+	\item Decca Tree
+	\item Hamasaki Square
+	\end{itemize}
+	
+\item Sound sources:
+	\begin{itemize}
+	\item String quartet
+	\item Piano trio
+	\item Piano solo
+	\item Organ
+	\item Clarinet solo
+	\item Vocal group
+	\item Room impulse response (virtual; 13 source positions)
+	\end{itemize}
+
+\item 250+ different front-rear-height combinations
+
+\item \textbacklash 10 hours of data 
+
+\item URL: \href{http://www.hud.ac.uk/apl/resources}{http://www.hud.ac.uk/apl/resources}
+
+\end{itemize}
 
 \bibliography{references}
 \bibliographystyle{plain}
