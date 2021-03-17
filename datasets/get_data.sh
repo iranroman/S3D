@@ -37,20 +37,24 @@ zenodo_get 10.5281/zenodo.2635758 -o Olgun_and_Hacihabiboglu
 
 echo "#############################################################"
 echo "==== Now Downloading: "
-echo "==== DEMAND: multi-channel recordings in diverse environments
+echo "==== DEMAND: multi-channel recordings in diverse environments"
 echo "==== Thiemann et al. 2013 "
 echo "#############################################################"
 zenodo_get 10.5281/zenodo.1227121 -o Thiemann_etal_2013
 
-#echo "#######################################"
+echo "################################################"
+echo "==== NOTE: to download"
+echo "==== DREGON: in-flight multi-channel recordings"
+echo "==== visit https://dregon.inria.fr"
+echo "################################################"
+
+#echo "######################################"
 #echo "==== Now Downloading: "
-#echo "==== Massive distributed array dataset "
+#echo "==== Massive distributed array dataset"
 #echo "==== Corey et al. 2019 "
-#echo "#######################################"
+#echo "######################################"
 #mkdir Corey_etal_2019
 #curl https://download.library.illinois.edu/downloads/idb/c6b4c74c34fbbb9bc022a66dc208315b18c0ab05814412a3/get --output Corey_etal_2019/data.zip
-#
-#
 #
 #echo "#########################################"
 #echo "==== Now Downloading: "
@@ -58,4 +62,3 @@ zenodo_get 10.5281/zenodo.1227121 -o Thiemann_etal_2013
 #echo "==== Adavanne et al. 2019 "
 #echo "#########################################"
 #zenodo_get 10.5281/zenodo.2599196 -o Adavanne_etal_2019
-#
