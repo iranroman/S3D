@@ -48,14 +48,14 @@ echo "==== DREGON: in-flight multi-channel recordings"
 echo "==== visit https://dregon.inria.fr"
 echo "################################################"
 
-#echo "######################################"
-#echo "==== Now Downloading: "
-#echo "==== Massive distributed array dataset"
-#echo "==== Corey et al. 2019 "
-#echo "######################################"
-#mkdir Corey_etal_2019
-#curl https://download.library.illinois.edu/downloads/idb/c6b4c74c34fbbb9bc022a66dc208315b18c0ab05814412a3/get --output Corey_etal_2019/data.zip
-#
+echo "######################################"
+echo "==== Now Downloading: "
+echo "==== Massive distributed array dataset"
+echo "==== Corey et al. 2019 "
+echo "######################################"
+mkdir Corey_etal_2019
+curl https://download.library.illinois.edu/downloads/idb/c6b4c74c34fbbb9bc022a66dc208315b18c0ab05814412a3/get --output Corey_etal_2019/data.zip
+
 #echo "#########################################"
 #echo "==== Now Downloading: "
 #echo "==== Ambisonics and Microphone Array
