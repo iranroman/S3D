@@ -43,7 +43,7 @@
 
 \item Sound localization and tracking are fundamental problems of machine listening technologies.
 
-\item Without these capabilities, {\it listening machines} cannot locate living beings and objects in their environment by the sounds they make. 
+\item Without these capabilities, {\it intelligent machines} cannot locate living beings and objects in their environment by the sounds they make. 
 
 \end{itemize}
 
@@ -53,7 +53,9 @@
 
 \item Current machine listening models learn sound localization and tracking using a specific microphone array configuration. 
 
-\item To add or remove channels in the data, the model architecture must be changed and retrained, at least at the level of the input layer.
+\item As a result, a unifying framework across models and microphone array configurations is currently lacking. 
+
+\item To change a model's microphone array or simply add or remove channels in the data, the model architecture must also be changed and retrained, at least at the level of the input-processing units.
 
 \end{itemize}
 
@@ -61,11 +63,11 @@
 
 \begin{itemize}
 
-\item Microphone arrays come in all sizes and shapes \cite{kurz2015comparison, bates2017comparing, lopez2019sphear}. 
+\item Microphone arrays come in numerous sizes and shapes \cite{kurz2015comparison, bates2017comparing, lopez2019sphear}. 
 
 \item We should not think of individual microphone array configurations as mutually exclusive.
 
-\item Instead, we can think of them as a subset of a virtual with an infinite number of channels.
+\item Instead, we can think of them as a subset of a virtual array with an infinite number of channels.
 
 \item The virtual array is spherical in shape, and contains microphones at all positions and facing all possible directions of arrival.
 
@@ -79,6 +81,8 @@
 
 \begin{itemize}
 
+\item This review is limited to existing datasets from the last 10 years
+
 \item This document has two goals:
 	\begin{itemize}
 	\item To identify existing audio datasets collected with microphone arrays. 
@@ -91,13 +95,13 @@
 
 \item Next, we present an overview of existing datasets with microphone arrays.
 
-\item Finally, we discuss methodologies to exploit these datasets with the goal of approximating the virtual array.  
+\item Finally, we discuss methodologies to use these datasets with the goal of approximating the virtual array.  
 
 \end{itemize}
 
 \section{Object localization and tracking with microphone arrays}
 
-\subsection{Auditory object localization and tracking}
+\subsection{Auditory object localization and tracking in animals}
 
 \begin{itemize}
 
@@ -130,25 +134,23 @@
 
 \item Why do we need microphone arrays to carry out the same task that many animals carry out with two ears?
 
-\item There two main technical problems with binaural source localization in machines \cite{kim2015improved}:
+\item Firstly, we want microphone arrays to robustly localize and track auditory objects in a wide array of environments, unlike animal species occupying an environmental niche.
+
+\item Additionally, there two technical problems with binaural source localization in machines \cite{kim2015improved}:
 	\begin{itemize}
 	\item Diffraction of sound waves around the agent's head
 	\item Front back ambiguity
 	\end{itemize}
 
-\item To overcome these issues, it is necessary to move the ears and head (like humans naturally do) and filter inputs with specific head-related transfer functions.
+\item To overcome these issues, it is necessary to move the ears and head (like animals naturally do) and filter inputs with specific head-related transfer functions.
 
-\item In other words, the machine has to listen more like a biological agent.
-	
-\item From an engineering stand-point, the issue can be solved using microphone arrays, which add spatial and auditory information. 
+\item Alternatively, these technical problems can be solved using microphone arrays, which add spatial and auditory information. 
 
 \item In machine listening, microphone arrays have been shown to be the optimal solution to carrying out sond source localization and tracking.
 
 \item In general, the larger the number of microphones in an array, the better sound source localization results \cite{valin2007robust}.
 
-\item Microphone subsampling
-
-\item This review is limited in scope to the last ? years
+\item Additionally, a microphone array allows for spatial subsampling.
 
 \end{itemize}
 
@@ -187,7 +189,7 @@
 \item Sound sources
 	\begin{itemize}
 	\item Genelec 8020A speaker
-	\item distance \textbackslash \SI{4}{\metre}
+	\item distance $\sim$ \SI{4}{\metre}
 	\item three different heights
 	\item 180 uniformly spaced angles by \SI{5}{\degree}
 	\end{itemize}
@@ -202,6 +204,59 @@
 	\item documentation and code
 	\item also available: raw wav files
 	\end{itemize}
+
+\end{itemize}
+
+\subsubsection{DREGON (Strauss et al., 2018)}
+
+\begin{itemize}
+
+\item In-flight multi-channel recordings of sound sources \cite{strauss2018dregon}
+
+\item Hardware
+	\begin{itemize}
+	\item Custom cube-shaped microphone array on flying drone
+		\begin{itemize}
+		\item 8 omnidirectional microphones
+		\item motion capture system 
+		\end{itemize}
+	\end{itemize}
+
+\item Environment: 2 carpeted rooms
+	\begin{itemize}
+	\item dimensions: \SI{10}{\metre}\texttimes\SI{10}{\metre}\texttimes\SI{2.5}{\metre}
+	\item dimensions: \SI{12}{\metre}\texttimes\SI{12}{\metre}\texttimes\SI{3.5}{\metre}
+	\item RT60 less than \SI{150}{\milli\second}
+	\end{itemize}
+
+\item Signal
+	\begin{itemize}
+	\item white noise
+	\item speech
+	\item slient flight
+	\end{itemize}
+
+\item Sound sources
+	\begin{itemize}
+	\item Genelec loudspeaker
+	\end{itemize}
+
+\item url: \href{http://dregon.inria.fr}{http://dregon.inria.fr} 
+
+\item Files available
+	\begin{itemize}
+	\item raw recordings in wav format (300ms)
+	\item documentation
+	\item also included: recordings with the microphone array in an anechoic chamber
+	\end{itemize}
+
+\end{itemize}
+
+\subsubsection{WHISPER (Ceolini et al. 2019)}
+
+\begin{itemize}
+
+\item Concurrent and noisy speech recorded with 16 microphones on a table \cite{ceolini2020evaluating}
 
 \end{itemize}
 
@@ -250,15 +305,15 @@
 		\item HOA encoding
 		\item ADC sampling \SI{48}{\kilo\hertz} at 16 bits
 		\end{itemize}
-	\item \textbackslash \SI{2.5}{\metre} height
+	\item $\sim$ \SI{2.5}{\metre} height
 	\item 250+ different front-rear-height combinations
 	\end{itemize}
 
-\item Environment: St. Paul's concert hall (RT60 \textbackslash \SI{2.1}{\second}; Huddersfield, UK)
+\item Environment: St. Paul's concert hall (RT60 $\sim$ \SI{2.1}{\second}; Huddersfield, UK)
 
 \item Signals
 	\begin{itemize}
-	\item musical performances (\textbackslash 10 hours of data)
+	\item musical performances ($\sim$ 10 hours of data)
 	\item sine sweeps
 	\end{itemize}
 
@@ -286,6 +341,56 @@
 	\item room impulse responses (wav)
 	\item documentation
 	\item also available: similar dataset of room impulse responses \cite{lee2017microphone}
+	\end{itemize}
+
+\end{itemize}
+
+\subsubsection{MDMAD (Corey et al. 2019)}
+
+\begin{itemize}
+
+\item Speech recorded with microphone arrays and wearables on mannequins in a reverberant conference room \cite{corey2019massive}
+
+\item Hardware
+	\begin{itemize}
+	\item Wearable arrays (4)
+		\begin{itemize}
+		\item 16 microphones
+		\item on glasses and around torso 
+		\end{itemize}
+	\item Tabletop arrays (12)
+		\begin{itemize}
+		\item 8 microphones in plastic enclosures
+		\item diameter of \SI{10}{\centi\metre}
+		\end{itemize}
+	\item all microphones are Countryman B3 omnidirectional
+	\end{itemize}
+
+\item Environment: large reverberant conference room
+	\begin{itemize}
+	\item dimensions: \SI{9}{\metre}\texttimes\SI{13}{\metre}
+	\item RT60 \SI{800}{\milli\second} 
+	\end{itemize}
+
+\item Signal
+	\begin{itemize}
+	\item VCTK corpus speech, solo and coctail
+	\item sine sweeps
+	\item ambient noise
+	\end{itemize}
+
+\item Sound sources
+	\begin{itemize}
+	\item Presonus Eris E3.5 two-way 
+	\item \SI{137}{\centi\metre} tall stands
+	\end{itemize}
+
+\item DOI: \href{https://databank.illinois.edu/datasets/IDB-6216881}{10.13012/B2IDB-6216881\_V1}
+
+\item Files available
+	\begin{itemize}
+	\item raw recordings in wav format
+	\item documentation
 	\end{itemize}
 
 \end{itemize}
@@ -476,6 +581,32 @@
 	\item raw recordings in wav format (300ms)
 	\item documentation
 	\end{itemize}
+
+\end{itemize}
+
+\subsubsection{MIMII (Purohit et al., 2019)}
+
+\begin{itemize}
+
+\item factory and machine sounds recorded with an eight-channel circular microphone array \cite{purohit2019mimii}.
+
+\end{itemize}
+
+\subsubsection{Hear-and-Avoid (Wijnker et al., 2019)}
+
+\begin{itemize}
+
+\item microphone array (63 on a horizontal board) recordings of overflying planes \cite{wijnker2019hear}.
+
+\end{itemize}
+
+\subsection{Synthetic datasets}
+
+\subsubsection{TAU (Adavanne et al., 2019)}
+
+\begin{itemize}
+
+\item synthetic stationary point sources convolved with room impulse responses in a tetrahedral array configuration \cite{adavanne2019tau}.
 
 \end{itemize}
 
