@@ -1,5 +1,6 @@
-\documentclass[14pt, oneside]{extarticle} 
-\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphics, geometry, siunitx, hyperref}
+\documentclass[14pt, legalpaper]{extarticle} 
+\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphics, geometry, hyperref, lscape, makecell}
+\usepackage[binary-units=true]{siunitx}
 \renewcommand{\familydefault}{\sfdefault}
 
 \geometry{tmargin=.75in, bmargin=.75in, lmargin=.75in, rmargin = .75in}  
@@ -155,6 +156,78 @@
 \end{itemize}
 
 \section{Commonly used microphone arrays}
+
+\begin{landscape}
+{\footnotesize
+\begin{tabular}{*{17}{l|}}
+Dataset & \multicolumn{7}{l|}{Mic array(s)} & Signal(s) & \multicolumn{3}{l|}{Source(s)} & Angles & \multicolumn{2}{l|}{Env} & Hrs & Uses \\
+\hline
+	& array & shape & ch & type & size & sampling & height & & type & dist & height (m) & & room & RT60 & & \\
+
+\hline
+\href{https://zenodo.org/record/1209563}{Pyramic} \cite{scheibler2018pyramic} &
+Pyramic & tetrahedr & 48ch & MEMS & \SI{0.02}{\cubic\metre} & \SI{48}{\kilo\hertz}, \SI{16}{\bit} & \SI{1.1}{\metre} &
+\makecell[tl]{sweeps \\ noise \\ speech} & 
+loudspk & \SI{4}{\metre} & \SI{0.25},\SI{1.3},\SI{2.2} &
+180 unifm &
+anechoic & \SI{0}{\second}&
+2.5 &
+\makecell[tl]{DoA \cite{bezzam2017hardware}, BF \cite{bezzam2017hardware, simeoni2019deepwave}, \\ acous imag \cite{simeoni2019deepwave}, \\ mic calib \cite{baechler2020coordinate}} \\
+
+\hline
+\href{https://zenodo.org/record/3477602}{MARCo} \cite{lee3d} &
+\makecell[tl]{OCT-3D \cite{theile20123d} \\ 2L-Cube \\ Decca \\ PCMA-3D \\ Hamasaki \\ Eigenmike} & 
+\makecell[tl]{cuboid \\ cuboid \\ cuboid \\ plane \\ cuboid \\ sphere} &
+\makecell[tl]{9ch \\ 9ch \\ 9ch \\ 9ch \\ 12ch \\ 32ch} & 
+\makecell[tl]{crd \\ omni \\ omni \\ crd \\ crd+8 \\ omni} &
+\makecell[tl]{\SI{1}{\cubic\metre} \\ \SI{1}{\cubic\metre} \\ \SI{4}{\cubic\metre} \\ \SI{1}{\squared\metre} \\ \SI{4}{\cubic\metre} \\ \SI{0.001}{\cubic\metre}} &
+\makecell[tl]{\SI{96}{\kilo\hertz}, \SI{24}{\bit} \\ \SI{96}{\kilo\hertz}, \SI{24}{\bit} \\ \SI{96}{\kilo\hertz}, \SI{24}{\bit} \\ \SI{96}{\kilo\hertz}, \SI{24}{\bit} \\ \SI{96}{\kilo\hertz}, \SI{24}{\bit} \\ \SI{48}{\kilo\hertz}, \SI{16}{\bit}} & 
+\makecell[tl]{\SI{2.7}{\metre} \\ \SI{2.7}{\metre} \\ \SI{2.7}{\metre} \\ \SI{2.7}{\metre} \\ \SI{2.4}{\metre} \\ \SI{2.7}{\metre}} &
+\makecell[tl]{live \\ music \\ \\ \\ \\ sweeps} & 
+\makecell[tl]{str qrt \\ piano \\ organ \\ clarinet \\ voice 5 \\ loudspk} & 
+\makecell[tl]{\SI{2.6}{\metre} \\ \SI{3.4}{\metre} \\ \SI{12}{\metre} \\ \SI{2.6}{\metre} \\ \SI{2.6}{\metre} \\ \SI{3.5}{\metre}} & 
+\makecell[tl]{ \\ \\ \\ \\ \\ \SI{1.14}{} } &
+\makecell[tl]{ \\ \\ \\ \\ \\ 13 frnt hlf} &
+conc hall & \SI{2.1}{\second}&
+11 &
+Psy acoust \cite{lee2021multichannel} \\
+
+\hline
+\href{https://zenodo.org/record/1227121}{DEMAND} \cite{thiemann2013demand} &
+DEMAND & sq grid & 16ch & cond & \SI{0.04}{\square\metre} & \SI{48}{\kilo\hertz}, \SI{16}{\bit} & \SI{1.4}{\metre} &
+ambient & & & & &
+\makecell[tl]{home \\ nature \\ office \\ public \\ street \\ transp} & &
+1.5 &
+\makecell[tl]{BF \cite{thiemann2013experimental} \\ BSS \cite{thiemann2013experimental, thiemann2013fast} \\ Mic calib \cite{thiemann2014spatial} \\ backgrnd noise} \\
+
+\hline
+\href{https://zenodo.org/record/3630471}{LOCATA} \cite{evers2020data} &
+\makecell[tl]{NAO \cite{tourbabin2014theoretical} \\ Eigenmike \\ DICIT \cite{brutti2010woz} \\ hearaids \\ mo-cap} & 
+\makecell[tl]{sphere \\ sphere \\ planar \\ } &
+\makecell[tl]{12ch \\ 32ch \\ 15ch \\ 4ch} & 
+\makecell[tl]{omni \\ omni \\ omni \\ omni} &
+\makecell[tl]{\SI{0.001}{\cubic\metre} \\ \SI{0.001}{\cubic\metre} \\ \SI{2.24}{\metre} \\} &
+\makecell[tl]{\SI{48}{\kilo\hertz} \\ \SI{48}{\kilo\hertz} \\ \SI{48}{\kilo\hertz} \\ \SI{48}{\kilo\hertz}} & &
+speech & 
+\makecell[tl]{multpl \\ loudspk \\ \\ multpl \\ human} & & & &
+laboratry & \SI{0.55}{\second} &
+0.5 &
+\makecell[tl]{src pos \cite{evers2020data} \\ src trk \cite{evers2020data} \\ DoA \cite{pak2018locata}} \\
+
+\hline
+\href{http://dregon.inria.fr}{DREGON} & 
+\makecell[tl]{DREGON \\ mic array \\ mo-cap} & \makecell[tl]{8ch \\ 8ch} & \makecell[tl]{cube \\ cube} & \makecell[tl]{omni \\ omni} & 
+\makecell[tl]{\SI{0.001}{\cubic\metre} \\ \SI{0.001}{\cubic\metre}} & 
+\makecell[tl]{\SI{44.1}{\kilo\hertz} \\ \SI{44.1}{\kilo\hertz}} &  &
+\makecell[tl]{noise \\ speech \\ chirp \\ motor \\ ambient} &
+loudspk & & & &
+carp room & \SI{0.15}{\second} &
+1 &
+\makecell[tl]{DoA \cite{qayyum2019direction} \\ src pos \cite{qayyum2020doanet, aldeiasemblance} } \\
+
+\end{tabular}
+}
+\end{landscape}
 
 \section{Existing datasets with microphone arrays (by recording environment)}
 
