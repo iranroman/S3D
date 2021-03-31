@@ -189,11 +189,11 @@
   publisher={IEEE}
 }
 
-@misc{adavanne2019tau,
-  title={TAU Spatial Sound Events 2019-Ambisonic and Microphone Array Development Datasets},
-  author={Adavanne, S and Politis, A and Virtanen, T},
-  year={2019},
-  publisher={Zenodo}
+@article{adavanne2019multi,
+  title={A multi-room reverberant dataset for sound event localization and detection},
+  author={Adavanne, Sharath and Politis, Archontis and Virtanen, Tuomas},
+  journal={arXiv preprint arXiv:1905.08546},
+  year={2019}
 }
 
 @inproceedings{wijnker2019hear,
@@ -323,4 +323,118 @@
 @article{aldeiasemblance,
   title={On the Semblance Based TDOA Algorithm for Sound Source Localization: a parametric study},
   author={Aldeia, Guilherme Seidyo Imai and Ferreira, Henrique and Nose Filho, Kenji}
+}
+
+@article{green2017eigenscape,
+  title={EigenScape: A database of spatial acoustic scene recordings},
+  author={Green, Marc Ciufo and Murphy, Damian},
+  journal={Applied Sciences},
+  volume={7},
+  number={11},
+  pages={1204},
+  year={2017},
+  publisher={Multidisciplinary Digital Publishing Institute}
+}
+
+@article{green2020environmental,
+  title={Environmental sound monitoring using machine learning on mobile devices},
+  author={Green, Marc and Murphy, Damian},
+  journal={Applied Acoustics},
+  volume={159},
+  pages={107041},
+  year={2020},
+  publisher={Elsevier}
+}
+
+@article{mckenzie2019interaural,
+  title={Interaural Level Difference Optimization of Binaural Ambisonic Rendering},
+  author={McKenzie, Thomas and Murphy, Damian T and Kearney, Gavin},
+  journal={Applied Sciences},
+  volume={9},
+  number={6},
+  pages={1226},
+  year={2019},
+  publisher={Multidisciplinary Digital Publishing Institute}
+}
+
+@inproceedings{green2019acoustic,
+  title={Acoustic Scene Classification Using Higher-Order Ambisonic Features},
+  author={Green, Marc C and Adavanne, Sharath and Murphy, Damian and Virtanen, Tuomas},
+  booktitle={2019 IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA)},
+  pages={328--332},
+  year={2019},
+  organization={IEEE}
+}
+
+@article{weisser2019ambisonic,
+  title={The ambisonic recordings of typical environments (ARTE) database},
+  author={Weisser, Adam and Buchholz, J{\"o}rg M and Oreinos, Chris and Badajoz-Davila, Javier and Galloway, James and Beechey, Timothy and Keidser, Gitte},
+  journal={Acta Acustica United With Acustica},
+  volume={105},
+  number={4},
+  pages={695--713},
+  year={2019},
+  publisher={S. Hirzel Verlag}
+}
+
+@article{weisser2019complex,
+  title={Complex Acoustic Environments: Review, Framework, and Subjective Model},
+  author={Weisser, Adam and Buchholz, J{\"o}rg M and Keidser, Gitte},
+  journal={Trends in hearing},
+  volume={23},
+  pages={2331216519881346},
+  year={2019},
+  publisher={SAGE Publications Sage CA: Los Angeles, CA}
+}
+
+@article{kapka2019sound,
+ title={Sound source detection, localization and classification using consecutive ensemble of CRNN models},
+ author={Kapka, S{\l}awomir and Lewandowski, Mateusz},
+ journal={arXiv preprint arXiv:1908.00766},
+ year={2019}
+}
+
+@article{politis2020dataset,
+  title={A dataset of reverberant spatial sound scenes with moving sources for sound event localization and detection},
+  author={Politis, Archontis and Adavanne, Sharath and Virtanen, Tuomas},
+  journal={arXiv preprint arXiv:2006.01919},
+  year={2020}
+}
+
+@article{trowitzsch2019nigens,
+  title={The NIGENS general sound events database},
+  author={Trowitzsch, Ivo and Taghia, Jalil and Kashef, Youssef and Obermayer, Klaus},
+  journal={arXiv preprint arXiv:1902.08314},
+  year={2019}
+}
+
+@article{shimada2020sound,
+  title={Sound Event Localization and Detection Using Activity-Coupled Cartesian DOA Vector and RD3net},
+  author={Shimada, Kazuki and Takahashi, Naoya and Takahashi, Shusuke and Mitsufuji, Yuki},
+  journal={arXiv preprint arXiv:2006.12014},
+  year={2020}
+}
+
+@techreport{wang2020ustc,
+  title={The USTC-iFlytek system for sound event localization and detection of DCASE2020 challenge},
+  author={Wang, Qing and Wu, Huaxin and Jing, Zijun and Ma, Feng and Fang, Yi and Wang, Yuxuan and Chen, Tairan and Pan, Jia and Du, Jun and Lee, Chin-Hui},
+  year={2020},
+  institution={DCASE2020 Challenge, Tech. Rep}
+}
+
+@techreport{nguyen2020dcase,
+  title={DCASE 2020 Task 3: Ensemble of sequence matching networks for dynamic sound event localization, detection, and tracking,”},
+  author={Nguyen, Thi Ngoc Tho and Jones, Douglas L and Gan, Woon Seng},
+  year={2020},
+  institution={Tech. Rep., DCASE2020 Challenge}
+}
+
+@inproceedings{politis2020dataset,
+  author = "Politis, Archontis and Adavanne, Sharath and Virtanen, Tuomas",
+  title = "A Dataset of Reverberant Spatial Sound Scenes with Moving Sources for Sound Event Localization and Detection",
+  year = "2020",
+  booktitle = "Proceedings of the Workshop on Detection and Classification of Acoustic Scenes and Events (DCASE2020)",
+  month = "November",
+  abstract = "This report presents the dataset and the evaluation setup of the Sound Event Localization \& Detection (SELD) task for the DCASE 2020 Challenge. The SELD task refers to the problem of trying to simultaneously classify a known set of sound event classes, detect their temporal activations, and estimate their spatial directions or locations while they are active. To train and test SELD systems, datasets of diverse sound events occurring under realistic acoustic conditions are needed. Compared to the previous challenge, a significantly more complex dataset was created for DCASE 2020. The two key differences are a more diverse range of acoustical conditions, and dynamic conditions, i.e. moving sources. The spatial sound scenes are created using real room impulse responses captured in a continuous manner with a slowly moving excitation source. Both static and moving sound events are synthesized from them. Ambient noise recorded on location is added to complete the generation of scene recordings. A baseline SELD method accompanies the dataset, based on a convolutional recurrent neural network, to provide benchmark scores for the task. The baseline is an updated version of the one used in the previous challenge, with input features and training modifications to improve its performance.",
+  url = "https://arxiv.org/abs/2006.01919"
 }
