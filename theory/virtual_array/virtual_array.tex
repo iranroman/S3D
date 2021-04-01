@@ -1,0 +1,66 @@
+\documentclass[14pt]{extarticle} 
+\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphics, geometry, hyperref, lscape, makecell, longtable}
+\usepackage[binary-units=true]{siunitx}
+\renewcommand{\familydefault}{\sfdefault}
+
+\geometry{tmargin=.75in, bmargin=.75in, lmargin=.75in, rmargin = .75in}  
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Cdot}{\boldsymbol{\cdot}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{conv}{Convention}
+\newtheorem{rem}{Remark}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+
+
+\title{Virtual microphone array: theoretical aspects}
+\author{Iran R. Roman \thanks{roman@nyu.edu}}
+\affil{Music and Audio Research Laboratory, New York University}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\vspace{.25in}
+
+\section{Theoretical framework}
+
+\begin{enumerate}
+
+\item Consider an audio signal $a(t)$ and an environment $h$ with LTI impulse response $h_c(t)$, where $c$ denotes the cartesian coordinates $c=(x,y,z)$ where the impulse respose $h_c(t)$ exists.
+
+\item $b_c(t) = (a(t) \ast h_c(t))$ is the convolution between the audio signal and the environment's impulse response at location $c=(x,y,z)$. 
+
+\item No also consider a microphone $u$ with impulse response $u(t)$. Measuring signal $a(t)$ at location $c$ in the environment $h$ will result in recording $r_c(t) = (u(t) \ast b_c(t))$.
+
+\item Given $r_c(t)$, one can obtain the time-delayed version $r_c(t-T)$ via convolution with a dirac delta function $\delta(T)$. So $r_c(t-T) = (r_c(t) \ast \delta(T))$.
+
+\item The virtual array will consist of $N$ identical microphones $u$ (or $N$ microphones with different impulse responses) physically distributed throughout the environment.
+
+\item All microphones in the virtual array listen a common signal $a(t)$, but at different locations. The measurement of the signal $a(t)$ in room $h$ by microphone $u_n$ at location $c$ is given by $r_{(n,c_n)}(t) = (u_n(t) \ast b_{c_n}(t)) = \big(u_n(t) \ast (a(t) \ast h_{c_n}(t))\big)$.
+
+\item Microphones in the virtual array may differ in position $c$ and impulse response $u(t)$. The different locations will change the room impulse response $h_c(t)$ that each microphone reads. Moreover, since the signal $a(t)$ travels at the speed of sound, the version of $a(t)$ reaching a specific microphone will be delayed with respect to other microphones. However, as we already discussed, delays can be easly accounted for with delta functions. 
+
+\item Because the microphones in the virtual array share a common signal $a(t)$, there exists an idealized transfer function $f(x)$ that can convert $r_{(n,c_n)}(t)$ into $r_{(m,c_m)}(t) = r_{(n,c_n)(t)} \ast f(r_{(n,c_n)},c_m)$. 
+
+\item Such idealized transfer function does not exist in practice. However, a transfer function $h(x)$ can convert $r_{(n,c_n)}(t)$ into $r_{(m,c_m)}(t)$ with error $r_{(m,c_m)}(t) = r_{(n,c_n)} \ast h(r_{(n,c_n)}) + \epsilon$.
+
+\item The question here is, how do we approximate $h(x)$ ?
+
+
+\end{enumerate}
+
+
+\bibliography{references}
+\bibliographystyle{plain}
+
+\end{document}
