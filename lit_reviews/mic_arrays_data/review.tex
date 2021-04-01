@@ -1,5 +1,5 @@
 \documentclass[14pt, legalpaper]{extarticle} 
-\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphics, geometry, hyperref, lscape, makecell}
+\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphics, geometry, hyperref, lscape, makecell, longtable}
 \usepackage[binary-units=true]{siunitx}
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -23,7 +23,7 @@
 \title{A review of existings datasets with microphone array recordings}
 \author{Iran R. Roman \thanks{roman@nyu.edu}}
 \affil{Music and Audio Research Laboratory, New York University}
-\date{March 2021}
+\date{}
 
 \begin{document}
 
@@ -54,7 +54,7 @@
 
 \item Current machine listening models learn sound localization and tracking using a specific microphone array configuration. 
 
-\item As a result, a unifying framework across models and microphone array configurations is currently lacking. 
+\item As a result, a unifying framework across models and microphone array configurations is  missing. 
 
 \item To change a model's microphone array or simply add or remove channels in the data, the model architecture must also be changed and retrained, at least at the level of the input-processing units.
 
@@ -82,21 +82,13 @@
 
 \begin{itemize}
 
-\item This review is limited to existing datasets from the last 10 years
-
-\item This document has two goals:
-	\begin{itemize}
-	\item To identify existing audio datasets collected with microphone arrays. 
-	\item To discuss whether they can be used to approximate the virtual array. 
-	\end{itemize}
+\item This document will identify existing audio datasets collected with microphone arrays in different settings.
 
 \item First, we describe the importance of microphone arrays for object localization and tracking.
 
-\item Then, we review the technical specifications of commonly used microphone arrays.
+\item Then, we list a reviews that list the technical specifications of commonly used microphone arrays.
 
 \item Next, we present an overview of existing datasets with microphone arrays.
-
-\item Finally, we discuss methodologies to use these datasets with the goal of approximating the virtual array.  
 
 \end{itemize}
 
@@ -157,30 +149,50 @@
 
 \section{Commonly used microphone arrays}
 
+\begin{itemize}
+
+\item Hyunkook Lee recently published a review of microphone arrays \cite{lee2021multichannel}
+	
+\item He describes hardware and techniques for microphone arrays used in several of the datasets that will be described in this review. 
+
+\item Note: some datasets described in this document use custom microphone arrays. In those cases, the original publication describing the dataset is the best source to understand the hardware and technical specifications of the microphone array.
+
+\end{itemize}
+
 \begin{landscape}
 {\footnotesize
-\begin{tabular}{|*{17}{l|}}
+\begin{longtable}{|*{17}{l|}}
 Dataset & \multicolumn{7}{l|}{Mic array(s)} & Signal(s) & \multicolumn{4}{l|}{Source(s)} & \multicolumn{2}{l|}{Env} & Hrs & Uses \\
 \hline
 & array & shape & ch & type & size & sampling & height & & type & dist (m) & height (m) & angles & room & RT60 & & \\
 
 \hline
-\makecell[tl]{\href{https://zenodo.org/record/2599196}{SEDL} \\
+\makecell[tl]{\href{https://zenodo.org/record/2599196}{DCASE t3} \\
 2019 \\ \cite{adavanne2019multi}} &
-EingeMike & sphere & 4ch & omni & \SI{0.001}{\cubic\metre} & \SI{48}{\kilo\hertz} & &
+EingeMike & sphere & 4ch & omni & \SI{0.001}{\cubic\metre} & \SI{48}{\kilo\hertz} & ? &
 \makecell[tl]{\href{http://dcase.community/challenge2016/task-sound-event-detection-in-synthetic-audio}{DCASE} \\ 16 t2} & 
-synthetic & \SI{1},\SI{2} & & 504 &
-\makecell[tl]{corridor \\ cafeteria \\ lounge} & &
+synthetic & \SI{1},\SI{2} & ? & 504 &
+\makecell[tl]{corridor \\ cafeteria \\ lounge} & ? &
 8 &
 src pos \cite{kapka2019sound} \\
 
 \hline
-\makecell[tl]{\href{https://zenodo.org/record/4064792}{SEDL} \\
+\makecell[tl]{\href{https://zenodo.org/record/4064792}{DCASE t3} \\
 2020 \\ \cite{politis2020dataset}} &
-EingeMike & sphere & 4ch & omni & \SI{0.001}{\cubic\metre} & \SI{24}{\kilo\hertz} & &
+EingeMike & sphere & 4ch & omni & \SI{0.001}{\cubic\metre} & \SI{24}{\kilo\hertz} & ? &
 \makecell[tl]{\href{https://zenodo.org/record/2535878}{NIGENS} \\ \cite{trowitzsch2019nigens}} & 
-synthetic & & & mov &
-\makecell[tl]{classroom \\ auditorium} & &
+synthetic & varies & varies & varies &
+\makecell[tl]{classroom \\ auditorium} & ? &
+13 &
+src trk \cite{shimada2020sound, wang2020ustc, nguyen2020dcase} \\
+
+\hline
+\makecell[tl]{\href{https://zenodo.org/record/4568781}{DCASE t3} \\
+2021 \\ \cite{politis2021tau}} &
+EingeMike & sphere & 4ch & omni & \SI{0.001}{\cubic\metre} & \SI{24}{\kilo\hertz} & ? &
+\makecell[tl]{\href{https://zenodo.org/record/2535878}{NIGENS} \\ \cite{trowitzsch2019nigens} \\ dir interf} & 
+synthetic & varies & varies & varies &
+\makecell[tl]{lounge \\ cafeteria \\ hallway \\ auditorium \\ classroom \\ gym} & ? &
 13 &
 src trk \cite{shimada2020sound, wang2020ustc, nguyen2020dcase} \\
 
@@ -215,6 +227,15 @@ conc hall & \SI{2.1}{\second}&
 psyacous \cite{lee2021multichannel} \\
 
 \hline
+\makecell[tl]{\href{https://www.iks.rwth-aachen.de/en/research/tools-downloads/databases/multi-channel-impulse-response-database/}{MIRD} \\
+2014 \\ \cite{hadad2014multichannel}} &
+MIRD & planar & 8ch & omni & \SI{0.5}{\metre} & \SI{48}{\kilo\hertz}, \SI{24}{\bit} & \SI{1}{\metre} &
+sweep & loudspk & \SI{1}, \SI{2} & \SI{1} & 13 frnt hlf &
+\makecell[tl]{conf 1 \\ conf 2 \\ conf 3} & \makecell[tl]{\SI{0.16}{\second} \\ \SI{0.36}{\second} \\ \SI{0.61}{\second}} &
+0.1 &
+\makecell[tl]{src pos \cite{bianco2021semi} \\ speech enh \cite{gannot2017consolidated}} \\
+
+\hline
 \makecell[tl]{\href{https://zenodo.org/record/1227121}{DEMAND} \\
 2013 \\ \cite{thiemann2013demand}} &
 DEMAND & grid & 16ch & cond & \SI{0.04}{\square\metre} & \SI{48}{\kilo\hertz}, \SI{16}{\bit} & \SI{1.4}{\metre} &
@@ -231,10 +252,10 @@ ambient & & & & &
 \makecell[tl]{12ch \\ 32ch \\ 15ch \\ 4ch} & 
 \makecell[tl]{omni \\ omni \\ omni \\ omni} &
 \makecell[tl]{\SI{0.001}{\cubic\metre} \\ \SI{0.001}{\cubic\metre} \\ \SI{2.24}{\metre} \\} &
-\makecell[tl]{\SI{48}{\kilo\hertz} \\ \SI{48}{\kilo\hertz} \\ \SI{48}{\kilo\hertz} \\ \SI{48}{\kilo\hertz}} & &
+\makecell[tl]{\SI{48}{\kilo\hertz} \\ \SI{48}{\kilo\hertz} \\ \SI{48}{\kilo\hertz} \\ \SI{48}{\kilo\hertz}} & ? &
 speech & 
-\makecell[tl]{multpl \\ loudspk \\ \\ multpl \\ human} & & & &
-laboratry & \SI{0.55}{\second} &
+\makecell[tl]{multpl \\ loudspk \\ \\ multpl \\ human} & varies & varies & varies &
+laboratory & \SI{0.55}{\second} &
 0.5 &
 \makecell[tl]{src pos \cite{evers2020data} \\ src trk \cite{evers2020data} \\ DoA \cite{pak2018locata}} \\
 
@@ -243,9 +264,9 @@ laboratry & \SI{0.55}{\second} &
 2018 \\ \cite{strauss2018dregon}} & 
 \makecell[tl]{drone mic \\ mic array \\ mo-cap} & \makecell[tl]{cube \\ cube}  & \makecell[tl]{8ch \\ 8ch}& \makecell[tl]{omni \\ omni} & 
 \makecell[tl]{\SI{0.001}{\cubic\metre} \\ \SI{0.001}{\cubic\metre}} & 
-\makecell[tl]{\SI{44.1}{\kilo\hertz} \\ \SI{44.1}{\kilo\hertz}} &  &
-\makecell[tl]{noise \\ speech \\ chirp \\ motor \\ ambient} &
-loudspk & & & &
+\makecell[tl]{\SI{44.1}{\kilo\hertz} \\ \SI{44.1}{\kilo\hertz}} & ? &
+\makecell[tl]{noise \\ speech \\ sweep \\ motor \\ ambient} &
+loudspk & varies & varies & varies &
 carp room & \SI{0.15}{\second} &
 1.0 &
 \makecell[tl]{DoA \cite{qayyum2019direction} \\ src pos \cite{qayyum2020doanet, aldeiasemblance} } \\
@@ -257,7 +278,7 @@ EigenMike & sphere  & 32ch & omni &
 \SI{0.001}{\cubic\metre} & 
 \SI{48}{\kilo\hertz}, \SI{24}{\bit} & \SI{1.5}{\metre} &
 ambient & & & & &
-\makecell[tl]{beach \\ street \\ park \\ ped zone \\ store \\ train stn \\ woods} & &
+\makecell[tl]{beach \\ street \\ park \\ ped zone \\ store \\ train stn \\ woods} & ? &
 10.7 &
 \makecell[tl]{scene clss \cite{green2020environmental,green2019acoustic} \\ psyacous \cite{mckenzie2019interaural} } \\
 
@@ -267,466 +288,223 @@ ambient & & & & &
 ARTE & sphere  & 62ch & omni & 
 \SI{0.001}{\cubic\metre} & 
 \SI{44.1}{\kilo\hertz}, \SI{32}{\bit} & \SI{1.5}{\metre} &
-\makecell[tl]{sweep \\ ambient} & loudspk & \SI{1.3}{} & & \SI{0}{\degree} &
-\makecell[tl]{party \\ liv room \\ cafeteria \\ office \\ train stn \\ cafe} & &
+\makecell[tl]{sweep \\ ambient} & loudspk & \SI{1.3}{} & ? & \SI{0}{\degree} &
+\makecell[tl]{party \\ liv room \\ cafeteria \\ office \\ train stn \\ cafe} & ? &
 0.5 &
 psyacous \cite{weisser2019complex}\\
-
-\end{tabular}
+\caption{Technical specifications of microphone array datasets. Each dataset name includes a hyperlink to the official dataset repository. A question mark in a cell denotes information that could not be found in the dataset's documentation}
+\label{tab:t1}
+\end{longtable}
 }
 \end{landscape}
 
-\section{Existing datasets with microphone arrays (by recording environment)}
+\section{Brief description of existing datasets with microphone arrays}
 
-\subsection{Anechoic or semi-anechoic room}
-
-\subsubsection{Pyramic (Scheibler, 2018)}
+\subsection{DCASE 2019 task 3 (Adavanne et al., 2019)}
 
 \begin{itemize}
 
-\item Sine sweeps, noise, and speech samples, recorded with a 48-channel microphone array in an anechoic chamber \cite{scheibler2018pyramic}
-
-\item Hardware: the Pyramic microphone \cite{scheibler2018pyramic}
-	\begin{itemize}
-	\item 6 PCBs, each with 8 Micro-Electro-Mechanical System (MEMS) microphones 
-	\item each PCB is \SI{27}{\centi\metre} long
-	\item six microphones spaced by \SI{40}{\milli\metre}, the remaining two by \SI{8}{\milli\metre}
-	\item spatial aliasing avoided up to \SI{21}{\kilo\hertz}
-	\item each PCB has an ADC
-	\item ADC sampling \SI{48}{\kilo\hertz} at 16 bits
-	\item \SI{1.143}{\metre} height
-	\end{itemize}
-
-\item Environment: anechoic chamber
-	
-\item Signals
-	\begin{itemize}
-	\item linear and exponential sweeps
-	\item noise sequence
-	\item male (2) and female (3) speech
-	\end{itemize}
-
-\item Sound sources
-	\begin{itemize}
-	\item Genelec 8020A speaker
-	\item distance $\sim$ \SI{4}{\metre}
-	\item three different heights
-	\item 180 uniformly spaced angles by \SI{5}{\degree}
-	\end{itemize}
-
-\item DOI: \href{https://zenodo.org/record/1209563}{10.5281/zenodo.1209563}
-
-\item Files available
-	\begin{itemize}
-	\item compressed recordings in TTA format
-	\item segmented recordings
-	\item all microphone's impulse responses
-	\item documentation and code
-	\item also available: raw wav files
-	\end{itemize}
+\item Signals convolved with room impulse responses, generating synthetic recordings of static sources with a tetrahedral array (subset of the 32-channel EigenMike) \cite{adavanne2019multi}. See \ref{tab:t1} for details.
 
 \end{itemize}
 
-\subsubsection{DREGON (Strauss et al., 2018)}
+\subsection{DCASE 2020 task 3 (Politis et al., 2020)}
 
 \begin{itemize}
 
-\item In-flight multi-channel recordings of sound sources \cite{strauss2018dregon}
-
-\item Hardware
-	\begin{itemize}
-	\item Custom cube-shaped microphone array on flying drone
-		\begin{itemize}
-		\item 8 omnidirectional microphones
-		\item motion capture system 
-		\end{itemize}
-	\end{itemize}
-
-\item Environment: 2 carpeted rooms
-	\begin{itemize}
-	\item dimensions: \SI{10}{\metre}\texttimes\SI{10}{\metre}\texttimes\SI{2.5}{\metre}
-	\item dimensions: \SI{12}{\metre}\texttimes\SI{12}{\metre}\texttimes\SI{3.5}{\metre}
-	\item RT60 less than \SI{150}{\milli\second}
-	\end{itemize}
-
-\item Signal
-	\begin{itemize}
-	\item white noise
-	\item speech
-	\item slient flight
-	\end{itemize}
-
-\item Sound sources
-	\begin{itemize}
-	\item Genelec loudspeaker
-	\end{itemize}
-
-\item url: \href{http://dregon.inria.fr}{http://dregon.inria.fr} 
-
-\item Files available
-	\begin{itemize}
-	\item raw recordings in wav format (300ms)
-	\item documentation
-	\item also included: recordings with the microphone array in an anechoic chamber
-	\end{itemize}
+\item Signals convolved with room impulse responses, generating synthetic recordings of moving sources with a tetrahedral array (subset of the 32-channel EigenMike) \cite{politis2020dataset}. See \ref{tab:t1} for details.
 
 \end{itemize}
 
-\subsubsection{WHISPER (Ceolini et al. 2019)}
+\subsection{DCASE 2021 task 3 (Politis et al., 2021)}
 
 \begin{itemize}
 
-\item Concurrent and noisy speech recorded with 16 microphones on a table \cite{ceolini2020evaluating}
+\item Signals convolved with room impulse responses, generating synthetic recordings of moving sources with a tetrahedral array (subset of the 32-channel EigenMike) \cite{politis2021tau}. See \ref{tab:t1} for details.
 
 \end{itemize}
 
-\subsection{Controlled reverberant room}
-
-\subsubsection{3D-MARCo (Lee and Johnson, 2019)}
+\subsection{Pyramic (Scheibler, 2018)}
 
 \begin{itemize}
 
-\item Recordings of musical performances and room impulse reponses with different 3D microphone arrays \cite{lee3d}
-
-\item Hardware: 71 microphones across different microphone arrays used simultaneously
-	\begin{itemize}
-	\item ADC sampling \SI{96}{\kilo\hertz} at 24 bits
-	\item OCT-3D \cite{theile20123d}
-		\begin{itemize}
-		\item dimensions: \SI{1}{\metre}\texttimes\SI{0.4}{\metre}\texttimes\SI{1}{\metre}
-		\item 6 supercardioid mics
-		\item 3 cardioid mics
-		\end{itemize}
-	\item 2L-Cube 
-		\begin{itemize}
-		\item dimensions: \SI{1}{\metre}\texttimes\SI{1}{\metre}\texttimes\SI{1}{\metre}
-		\item 9 omnidirectional mics
-		\end{itemize}
-	\item Decca Tree (9 omnidirectional)
-		\begin{itemize}
-		\item dimensions: \SI{2}{\metre}\texttimes\SI{2}{\metre}\texttimes\SI{1}{\metre}
-		\item 9 omnidirectional mics
-		\end{itemize}
-	\item PCMA-3D \cite{lee2014effect}
-		\begin{itemize}
-		\item dimensions: \SI{1}{\metre}\texttimes\SI{1}{\metre}\texttimes\SI{0}{\metre}
-		\item 4 supercardioid mics (up-facing)
-		\item 5 cardioid mics (\SI{30}{\degree})
-		\end{itemize}
-	\item Hamasaki Square
-		\begin{itemize}
-		\item dimensions: \SI{2}{\metre}\texttimes\SI{2}{\metre}\texttimes\SI{1}{\metre}
-		\item 4 fig-8 mics (side-facing)
-		\item 8 cardioid mics (back-facing)
-		\end{itemize}
-	\item Eigenmike
-		\begin{itemize}
-		\item 32 capsules on a sphere
-		\item HOA encoding
-		\item ADC sampling \SI{48}{\kilo\hertz} at 16 bits
-		\end{itemize}
-	\item $\sim$ \SI{2.5}{\metre} height
-	\item 250+ different front-rear-height combinations
-	\end{itemize}
-
-\item Environment: St. Paul's concert hall (RT60 $\sim$ \SI{2.1}{\second}; Huddersfield, UK)
-
-\item Signals
-	\begin{itemize}
-	\item musical performances ($\sim$ 10 hours of data)
-	\item sine sweeps
-	\end{itemize}
-
-\item Sound sources
-	\begin{itemize}
-	\item string quartet
-	\item piano trio
-	\item piano solo
-	\item organ
-	\item clarinet solo
-	\item vocal group
-	\item speakers
-		\begin{itemize}
-		\item 9 Genelec 8040A
-		\item 4 Genelec 1029As
-		\item 13 equally spaced angles by \SI{15}{\degree}
-		\end{itemize}
-	\end{itemize}
-
-\item DOI: \href{https://zenodo.org/record/3477602}{10.5281/zenodo.3477602}
-
-\item Files available
-	\begin{itemize}
-	\item musical performances (wav)
-	\item room impulse responses (wav)
-	\item documentation
-	\item also available: similar dataset of room impulse responses \cite{lee2017microphone}
-	\end{itemize}
+\item Sine sweeps, noise, and speech samples, recorded with a 48-channel microphone array in an anechoic chamber \cite{scheibler2018pyramic}. See \ref{tab:t1} for details.
 
 \end{itemize}
 
-\subsubsection{MDMAD (Corey et al. 2019)}
+\subsection{3D-MARCo (Lee and Johnson, 2019)}
 
 \begin{itemize}
 
-\item Speech recorded with microphone arrays and wearables on mannequins in a reverberant conference room \cite{corey2019massive}
-
-\item Hardware
-	\begin{itemize}
-	\item Wearable arrays (4)
-		\begin{itemize}
-		\item 16 microphones
-		\item on glasses and around torso 
-		\end{itemize}
-	\item Tabletop arrays (12)
-		\begin{itemize}
-		\item 8 microphones in plastic enclosures
-		\item diameter of \SI{10}{\centi\metre}
-		\end{itemize}
-	\item all microphones are Countryman B3 omnidirectional
-	\end{itemize}
-
-\item Environment: large reverberant conference room
-	\begin{itemize}
-	\item dimensions: \SI{9}{\metre}\texttimes\SI{13}{\metre}
-	\item RT60 \SI{800}{\milli\second} 
-	\end{itemize}
-
-\item Signal
-	\begin{itemize}
-	\item VCTK corpus speech, solo and coctail
-	\item sine sweeps
-	\item ambient noise
-	\end{itemize}
-
-\item Sound sources
-	\begin{itemize}
-	\item Presonus Eris E3.5 two-way 
-	\item \SI{137}{\centi\metre} tall stands
-	\end{itemize}
-
-\item DOI: \href{https://databank.illinois.edu/datasets/IDB-6216881}{10.13012/B2IDB-6216881\_V1}
-
-\item Files available
-	\begin{itemize}
-	\item raw recordings in wav format
-	\item documentation
-	\end{itemize}
+\item Musical performances and room impulse reponses, recorded with different 3D microphone arrays (71 channels total) in a large concert hall \cite{lee3d}. See \ref{tab:t1} for details. A similar dataset of room impulse responses is also available \cite{lee2017microphone}.
 
 \end{itemize}
 
-\subsubsection{METU SPARG (Olgun and Hacihabiboglu, 2019)}
+\subsection{MIRD (Hadad et al., 2014)}
 
 \begin{itemize}
 
-\item Impulse reponse measurements with the Eigenmike em32 and the Alctron M6 microphones \cite{olgun2019metu}
-
-\item Hardware
-	\begin{itemize}
-	\item Eigenmike
-		\begin{itemize}
-		\item 32 capsules on a sphere
-		\end{itemize}
-	\item Alctron M6
-		\begin{itemize}
-		\item single channel	
-		\end{itemize}
-	\end{itemize}
-
-\item Environment: classroom at METU Graduate School of Informatics
-	\begin{itemize}
-	\item dimensions: \SI{6.5}{\metre}\texttimes\SI{8.3}{\metre}\texttimes\SI{2.9}{\metre}
-	\item RT60 \SI{1.12}{\second} 
-	\end{itemize}
-
-\item Signal: logarithmic sine sweeps
-
-\item Sound sources
-	\begin{itemize}
-	\item Genelec 6010A
-	\item position and height changed on a rectilinear grid surrounding the microphone(s)
-	\end{itemize}
-
-\item DOI: \href{https://zenodo.org/record/2635758}{10.5281/zenodo.2635758} 
-
-\item Files available for each microphone
-	\begin{itemize}
-	\item raw recordings in wav format
-	\item documentation
-	\end{itemize}
+\item Sine sweep recordings with an 8-channel microphone array in three different acoustic environments \cite{hadad2014multichannel}. See \ref{tab:t1} for details.
 
 \end{itemize}
 
-\subsubsection{Detmold (Amengual et al., 2020)}
+\subsection{DEMAND (Thiemann et al., 2013)}
 
 \begin{itemize}
 
-\item Spatial room impulse responses from three performance stages, recorded with a microphone array and an artificial head \cite{amengual2020open}
-
-\item Hardware
-	\begin{itemize}
-	\item open array with six NTI M2010 mics
-		\begin{itemize}
-		\item 6 omnidirectional microphones 
-		\item 3 pairs on orthogonal axes	
-		\item dimensions: \SI{10}{\centi\metre} on-axis separation
-		\end{itemize}
-	\item Neumann KU100 binaural head
-	\item measurements at multiple locations across the room
-	\end{itemize}
-
-\item Environment
-	\begin{itemize}
-	\item Brahmssaal: a music chamber hall (\SI{750}{\cubic\metre})
-	\item Detmold Sommertheater: a small theater with balconies (\SI{2700}{\cubic\metre})
-	\item Detmold Konzerthaus: large performance room (\SI{4600}{\cubic\metre})
-	\end{itemize}
-
-\item Signal: logarithmic sine sweeps
-
-\item Sound sources
-	\begin{itemize}
-	\item Neumann KH120 speaker
-	\item Multiple locations on stage
-	\end{itemize}
-
-\item DOI: \href{https://zenodo.org/record/4116247}{10.5281/zenodo.4116247} 
-
-\item Files available for each microphone
-	\begin{itemize}
-	\item raw recordings in wav format
-	\item documentation
-	\end{itemize}
+\item Ambient noise recorded with a 16-channel microphone array in domestic, nature, and office environments \cite{thiemann2013demand}. See \ref{tab:t1} for details.
 
 \end{itemize}
 
-\subsection{Room with ambient noise}
-
-\subsubsection{LOCATA (Evers et al., 2020)}
+\subsection{LOCATA (Evers et al., 2020)}
 
 \begin{itemize}
 
-\item Recordings of stationay and moving talkers or loudspeakers using stationary or moving microphone arrays \cite{evers2020data}
-
-\item Hardware
-	\begin{itemize}
-	\item DICIT microphone array \cite{brutti2010woz}
-		\begin{itemize}
-		\item planar array with 15 microphones 
-		\item nested in a linear uniform fashion	
-		\item dimensions: \SI{2.24}{\metre} length
-		\end{itemize}
-	\item Eigenmike
-		\begin{itemize}
-		\item 32 capsules on a sphere 
-		\item dimensions: \SI{84}{\milli\metre} diameter
-		\end{itemize}
-	\item Robot head
-		\begin{itemize}
-		\item 12 microphones on a pseudo-sphere 
-		\end{itemize}
-	\item Hearing aids dummies
-		\begin{itemize}
-		\item mounted on a dummy head
-		\item two microphones per dummy
-		\item separated by \SI{9}{\milli\metre}
-		\end{itemize}
-	\item OptiTrack system for ground-truth positional labeling
-	\end{itemize}
-
-\item Environment: computing laboratory at Humboldt University
-	\begin{itemize}
-	\item dimensions: \SI{7.1}{\metre}\texttimes\SI{9.8}{\metre}\texttimes\SI{3}{\metre}
-	\item RT60 \SI{0.55}{\second} 
-	\item ambient road noise in front of the building
-	\end{itemize}
-
-\item Signal: speech utterances from the CSTR VCTK dataset
-
-\item Sound sources
-	\begin{itemize}
-	\item Static Genelec loudspeakers (1029A and 8020C)
-	\item loudspeakers played speech individually or simultaneously
-	\item Moving human talkers
-	\item talkers recited speech individually or simultaneously
-	\end{itemize}
-
-\item DOI: \href{https://zenodo.org/record/3630471}{10.5281/zenodo.3630471} 
-
-\item Files available
-	\begin{itemize}
-	\item raw recordings in wav format
-	\item ground truth positional information
-	\item documentation
-	\end{itemize}
+\item Moving speech sources, simultaneously recorded with different microphone arrays (over 60-channels in total) in a laboratory \cite{evers2020data}. Motion capture data included. See \ref{tab:t1} for details.
 
 \end{itemize}
 
-\subsection{Real-world environments}
-
-\subsubsection{DEMAND (Thiemann et al., 2013)}
+\subsection{DREGON (Strauss et al., 2018)}
 
 \begin{itemize}
 
-\item Multi-channel recordings of acoustic noise in diverse environments \cite{thiemann2013demand}
-
-\item Hardware
-	\begin{itemize}
-	\item Custom microphone array
-		\begin{itemize}
-		\item 16 omnidirectional electret condenser mics (Sony ECM-C10) 
-		\item placed on a staggered grid pattern 
-		\item microphone separation: \SI{5}{\centi\metre}
-		\end{itemize}
-	\end{itemize}
-
-\item Environment
-	\begin{itemize}
-	\item domestic: washing machine room, kitchen, and living room
-	\item nature: sports field, creek, city park
-	\item office: small office with people working, hallway in office building, meeting room with discussion.
-	\item public: subway station, office cafeteria, restaurant at lunchtime
-	\item street: traffic intersection, town square, cafe on public square
-	\item transportation: subway, bus, taxi
-	\end{itemize}
-
-\item Signal: real sounds in the environment
-
-\item Sound sources: multiple
-
-\item DOI: \href{https://zenodo.org/record/1227121}{10.5281/zenodo.1227121} 
-
-\item Files available
-	\begin{itemize}
-	\item raw recordings in wav format (300ms)
-	\item documentation
-	\end{itemize}
+\item Sine sweeps, noise, speech, motor, and ambient noise, recorded with an 8-channel in-flight (drone) microphone array in carpeted rooms \cite{strauss2018dregon}. Motion capture data included. See \ref{tab:t1} for details.
 
 \end{itemize}
 
-\subsubsection{MIMII (Purohit et al., 2019)}
+\subsection{EigenScape (Green and Murphy, 2017)}
 
 \begin{itemize}
 
-\item factory and machine sounds recorded with an eight-channel circular microphone array \cite{purohit2019mimii}.
+\item Ambient noise recorded with the 32-channel EigenMike microphone array in open spaces, including beach, streer, park, and woods \cite{green2017eigenscape}. See \ref{tab:t1} for details.
 
 \end{itemize}
 
-\subsubsection{Hear-and-Avoid (Wijnker et al., 2019)}
+\subsection{ARTE (Weisset et al., 2019)}
 
 \begin{itemize}
 
-\item microphone array (63 on a horizontal board) recordings of overflying planes \cite{wijnker2019hear}.
+\item Sine sweeps and ambient noise, recorded with a 62-channel spherical microphone array at various indoor spaces in a university \cite{weisser2019ambisonic}. See \ref{tab:t1} for details.
 
 \end{itemize}
 
-\subsection{Synthetic datasets}
-
-\subsubsection{TAU (Adavanne et al., 2019)}
+\subsection{WHISPER (Ceolini et al. 2019)}
 
 \begin{itemize}
 
-\item synthetic stationary point sources convolved with room impulse responses in a tetrahedral array configuration \cite{adavanne2019multi}.
+\item Concurrent and noisy speech recorded with 16 microphones on a table in a room with low reverberation \cite{ceolini2020evaluating}.
+
+\end{itemize}
+
+\subsection{MDMAD (Corey et al. 2019)}
+
+\begin{itemize}
+
+\item Sine sweeps, speech, and ambient noise, recorded with 8-channel table-top microphone arrays (emulating home voice assistant accessories) and 16-channel wearables on mannequins in a reverberant conference room \cite{corey2019massive}.
+
+\end{itemize}
+
+\subsection{METU SPARG (Olgun and Hacihabiboglu, 2019)}
+
+\begin{itemize}
+
+\item Sine sweeps recorded with the 32-channel EigenMike array in a classroom \cite{olgun2019metu}.
+
+\end{itemize}
+
+\subsection{Detmold (Amengual et al., 2020)}
+
+\begin{itemize}
+
+\item Sine sweeps recorded with a 6-channel spherical microphone array and an artificial head in concert halls \cite{amengual2020open}.
+
+\end{itemize}
+
+\subsection{MIMII (Purohit et al., 2019)}
+
+\begin{itemize}
+
+\item Ambient and machine sounds recorded with an 8-channel circular microphone array in a factory \cite{purohit2019mimii}.
+
+\end{itemize}
+
+\subsection{Hear-and-Avoid (Wijnker et al., 2019)}
+
+\begin{itemize}
+
+\item Overflying planes recorded with a 63-channel microphone array (horizontal board) on an airport \cite{wijnker2019hear}.
+
+\end{itemize}
+
+\subsection{SMARD (Nielsen et al., 2014)}
+
+\begin{itemize}
+
+\item Sine sweeps, speech, music, noise, and ambient noise, recorded with three diffrent microphone arrays (34 channels total) in a semi-anechoic listening room \cite{nielsen2014single}.
+
+\end{itemize}
+
+\subsection{Pori (Merimaa et al., 2005)}
+
+\begin{itemize}
+
+\item Sine sweep recordings with a tetrahedral microphone in a concert hall \cite{merimaa2005concert}.
+
+\end{itemize}
+
+\subsection{BUT Speech (Szoke et al., 2019)}
+
+\begin{itemize}
+
+\item Sine sweep and speech recordings with 13 microphones placed throughout 9 different rooms \cite{szoke2019building}.
+
+\end{itemize}
+
+\subsection{MMA (Swyssig et al., 2013)}
+
+\begin{itemize}
+
+\item Speech (WSJ) recordings with 5 microphone arrays (40 channels in total) in a meetng room and an anechoic room \cite{zwyssig2013recognition}.
+
+\end{itemize}
+
+\subsection{AV quadcopter (Wang et al., 2019)}
+
+\begin{itemize}
+
+\item Ambient and speech recordings with an 8-channel microphone array mounted on a drone in a park. Video recordings are also part of the dataset \cite{wang2019audio}.
+
+\end{itemize}
+
+\subsection{BIRD (Grondin et al., 2020)}
+
+\begin{itemize}
+
+\item 100,000 simulated multichannel room impulse responses via the image method with multiple sound sources \cite{grondin2020bird}.
+
+\end{itemize}
+
+\subsection{AMI (McCowan et al., 2005)}
+
+\begin{itemize}
+
+\item Recordings of meeting in an office environment (100 hours) with 4-ch or 8-ch microphone arrays \cite{mccowan2005ami}.
+
+\end{itemize}
+
+\subsection{TA2 (Duffner et al., 2012)}
+
+\begin{itemize}
+
+\item People in two diffrent rooms, recorded with 12 different microphones throughout the rooms while playing an online videogame. Annotations of individual's head position are included \cite{duffner2012ta2}.
+
+\end{itemize}
+
+\subsection{CHIME4 (Vincent et al., 2017)}
+
+\begin{itemize}
+
+\item WSJ sentences recorded with a 6-channel microphone array in noisy environments by multiple simultaneous talkers \cite{vincent2017analysis}.
 
 \end{itemize}
 
