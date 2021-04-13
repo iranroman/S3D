@@ -1,5 +1,5 @@
 \documentclass[14pt]{extarticle} 
-\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphics, geometry, hyperref, lscape, makecell, longtable}
+\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphicx, geometry, hyperref, lscape, makecell, longtable}
 \usepackage[binary-units=true]{siunitx}
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -32,59 +32,206 @@
 
 \vspace{.25in}
 
+\section{Introduction}
+
+\subsection{Motivation}
+
+\begin{itemize}
+
+\item Microphone arrays have an intrinsic spatial structure. 
+
+\item Learning such structure via self-supervised learning could result in a representation containing spatial information of sounds and environemtns recorded by the array.
+
+\item This representation could be used to solve downstream tasks like sound source localization and  tracking.
+
+\end{itemize}
+
+\subsection{Problem statement}
+
+\begin{itemize}
+
+\item Current machine listening models learn sound localization and tracking using a specific microphone array configuration.
+
+\item As a result, a unifying framework across models and microphone array configurations is  missing.
+
+\item To change a model's microphone array or simply add or remove channels in the data, the model architecture must also be changed and retrained, at least at the level of the input-processing units.
+
+\end{itemize}
+
+\subsection{Proposed solution}
+
+\begin{itemize}
+
+\item Microphone arrays come in numerous sizes and shapes \cite{kurz2015comparison, bates2017comparing, lopez2019sphear}. 
+
+\item We should not think of individual microphone array configurations as mutually exclusive.
+
+\item Instead, we can think of them as a subset of a virtual array with an infinite number of channels.
+
+\item The virtual array is spherical in shape, and contains microphones at all positions. 
+
+\item By using information from existing individual microphones, we can approximate any microphone in the virtual array.
+
+\end{itemize}
+
 \section{Theoretical framework}
 
 \begin{itemize}
 
-\item Consider an audio signal $a(t)$ and an environment $h$ with LTI impulse response $h_c(t)$, where $c$ denotes the cartesian coordinates $c=(x,y,z)$ where the impulse respose $h_c(t)$ exists.
+\item Given signals recorded by a (group of) microphone(s), the main purpose of the virtual array is to use them to approximate the recording by any other arbitrary microphone in the virtual array. 
 
-\item $b_c(t) = (a(t) \ast h_c(t))$ is the convolution between the audio signal and the environment's impulse response at location $c=(x,y,z)$. 
+\end{itemize}
 
-\item Also consider a microphone $u$ with impulse response $u(t)$. Measuring signal $a(t)$ at location $c$ in the environment $h$ using microphone $u$ will result in recording $r_c(t) = (u(t) \ast b_c(t))$.
+\begin{table}
+	\centering
+	\begin{tabular}{l|c}
+	
+	Description & Symbol \\
+	
+	\hline
+	audio signal & $a(t)$ \\
+	
+	\hline
+	environment & $h$ \\
+	
+	\hline
+	cartesian coordinates & $c=(x,y,z)$ \\
+	
+	\hline
+	impulse resp of $h$ at $c$ & $h_c(t)$ \\
+	
+	\hline 
+	$a(t)$ at $h_c$ & $b_c(t) = a(t) \ast h_c(t)$ \\
+	
+	\hline
+	microphone & $u_i$ \\
+	
+	\hline
+	mic impulse resp & $u_i(t)$ \\
+	
+	\hline
+	No. of microphones & $N$ \\
+	
+	\hline
+	recording with $u_i$ at $h_c$ & $r_{(i,c)}(t) = (u_i(t) \ast b_c(t))$ \\ 
+	
+	\end{tabular}
+	
+	\caption{Variables needed to describe elements in the virtual microphone array}
+	\label{tab:t1}
+\end{table}
 
-\item Given $r_c(t)$, one can obtain the time-delayed version $r_c(t-T)$ via convolution with a dirac delta function $\delta(T)$. So $r_c(t-T) = (r_c(t) \ast \delta(T))$. The only challenge will be the tail or head of t
+\subsection{Convolution operations in the virtual array}
 
-\item The virtual array will consist of $N$ identical microphones $u$ (or $N$ microphones with different impulse responses) physically distributed throughout the environment.
+\begin{itemize}
 
-\item All microphones in the virtual array listen a common signal $a(t)$, but at different locations. The measurement of the signal $a(t)$ in room $h$ by microphone $u_n$ at location $c$ is given by $r_{(n,c_n)}(t) = (u_n(t) \ast b_{c_n}(t)) = \big(u_n(t) \ast (a(t) \ast h_{c_n}(t))\big)$.
+\item Consider an audio signal $a(t)$ and an environment $h$ with LTI impulse response $h_c(t)$.
 
-\item Microphones in the virtual array may differ in position $c$ and impulse response $u(t)$. The different locations will change the room impulse response $h_c(t)$ that each microphone reads. Moreover, since the signal $a(t)$ travels at the speed of sound, the version of $a(t)$ reaching a specific microphone will be delayed with respect to other microphones. However, as we already discussed, delays can be easly accounted for with delta functions.  
+\item $c$ denotes the cartesian coordinates $c=(x,y,z)$ where the impulse respose $h_c(t)$ exists.
 
-\item Because the microphones in the virtual array share a common signal $a(t)$, there exists an idealized transfer function $f(x)$ that can convert $r_{(n,c_n)}(t)$ into $r_{(m,c_m)}(t) = r_{(n,c_n)}(t) \ast f(r_{(n,c_n)}(t),c_m)$. 
+\item The convolution between the audio signal and the environment's impulse response at location $c=(x,y,z)$ is: 
 
-\item Such idealized transfer function does not exist in practice. However, a transfer function $l(x)$ can convert $r_{(n,c_n)}(t)$ into $r_{(m,c_m)}(t)$ with error $r_{(m,c_m)}(t) = r_{(n,c_n)}(t) \ast l(r_{(n,c_n)}(t)) + \epsilon$.
+\begin{align}
+b_c(t) = a(t) \ast h_c(t)
+\end{align}
 
-\item The question here is, how do we approximate $l(x)$ ?
+\item Also consider a microphone $u$ with impulse response $u(t)$. 
 
-\item Because of relative location, microphone $u_m$ will receive the signal after (or before) microphone $u_n$. Forecasting (or inverse forecasting) at the head or tail of $r_{(c,c_n)}(t)$ will be the first step in the signal processing pipeline. 
+\item Measuring signal $a(t)$ at $h_c$ using microphone $u$ will result in recording: 
 
-\item Assuming a virtual array with a volume in the order of few meters, the delay between microphones will be in the order of few milliseconds (speed of sound in air is around \SI{343}{\metre\per\second}).
+\begin{align}
+r_c(t) = u(t) \ast b_c(t)
+\end{align}
+
+\item The virtual array will consist of $N$ microphones $u$ (microphones could have different impulse responses) physically distributed throughout the environment.
+
+\item All microphones in the virtual array listen a common signal $a(t)$, but at different locations. 
+\item The measurement of the signal $a(t)$ at $h_c$ by microphone $u_i$ is:
+
+\begin{align*}
+r_{(i,c)}(t) &= u_i(t) \ast b_{c}(t) \\
+	&= u_i(t) \ast \big(a(t) \ast h_{c}(t)\big)
+\end{align*}
+
+\end{itemize}
+
+\subsection{Generalized transformation between different $r_{(n,c)}$}
+
+\begin{itemize}
+
+\item Because the microphones in the virtual array share a common signal $a(t)$, there exists an idealized transfer function $f(x)$ that can convert $r_{(n,c_n)}(t)$ into $r_{(m,c_m)}(t)$ using $r_{n,c_n}$ and the spatial information $c_n$ and $c_m$:
+
+\begin{align*}
+r_{(m,c)}= r_{(n,c_n)}(t) \ast f(r_{(n,c_n)}(t),c_m)
+\end{align*}
+
+\item Such idealized transfer function does not exist in practice. However, a transfer function $l(x)$ can convert $r_{(n,c_n)}(t)$ into $r_{(m,c_m)}(t)$ with error:
+
+\begin{align*}
+r_{(m,c_m)}(t) = r_{(n,c_n)}(t) \ast l(r_{(n,c_n)}(t),c_m) + \epsilon
+\end{align*}
+
+\end{itemize}
+
+\section{Methods to obtain $l(x)$}
+
+\subsection{U-Net mask}
+
+\begin{itemize}
+		
+\item Yang, Russell and Salamon \cite{yang2020telling} used a Spectral U-Net \cite{gao20192, stoller2018wave} to upmix stereo audio from mono. 
+
+\begin{center}
+\includegraphics[scale=0.65]{figures/yang_2020.png}
+\end{center}
+
+\item The virtual array is a similar problem.
+
+\item Instead of a mono spectrogram, the input could be the spectrogram of multiple independent microphones listening the same signal in the same environment. 
+
+\item The spatial information for each input microphone could be used to generate the weights of the first convolutional layer (using another network) \cite{simonovsky2017dynamic, xiong2015conditional}.
+
+\item The spatial information for the desired microphone in the virtual array can be passed at the center of the U-Net.
+
+\item The U-net output will be the same shape as the input, and can be used to multiply the original inputs and obtain the desired new channel. 
+
+\end{itemize}
+
+\subsection{DDSP}
+
+\begin{itemize}
+
+\item An autoencoder can learn embeddings from the time-frequency features of $r_{(n,c_n)}(t)$. 
+
+\item 2D kernels will allow for learning of sound event detection and room acoustics. This is how the baseline method for the DCASE 2021 challenge task 3 \cite{Shimada2021}.
+
+\item The embedding representation and spatial information $c_n  - c_m$ can be passed to a network that produces the parameters for a cascade of biquads that approximate $h(t)$.
+
+\end{itemize}
+
+\section{Delays due to the speed of sound}
+
+\begin{itemize}
+
+\item Given $r_c(t)$, one can also obtain the time-delayed version $r_c(t-T)$ via convolution with a dirac delta function $\delta(T)$. 
+
+\begin{align*}
+r_c(t-T) = r_c(t) \ast \delta(T)
+\end{align*}
+
+\item Microphones in the virtual array differ in position $c$. 
+
+\item Since the signal $a(t)$ travels at the speed of sound, the version of $a(t)$ reaching a specific microphone will be delayed with respect to other microphones.
+
+\item Due to relative location, microphone $u_m$ will receive the signal after (or before) microphone $u_n$. Because of this, forecasting (or inverse forecasting) at the head or tail of $r_{(c,c_n)}(t)$ will be a necessary step in the signal processing pipeline. 
+
+\item Assuming a virtual array with a volume in the order of few meters, the delay between microphones in air will be in the order of few milliseconds (speed of sound in air is around \SI{343}{\metre\per\second}).
 
 \item This delay of a few milliseconds could be accounted for by phase-shifts implicit in filtering. The only exception would be sharply transient events that could be completely missing in a recording, specially at the tail of the signal, or at the head in anechoicc onditions.
 
 \item Existing approaches for audio signal forecasting include dilated convolutions \cite{oord2016wavenet} and transformers \cite{child2019generating}. 
 
-\item A CNN can learn embeddings from $r_{(n,c_n)}(t)$ time-frequency features. 2D kernels will allow for learning of sound event detection and room acoustics. 
-
-\item Signal processing pipeline to generate $r_{(m,c_m)}(t)$ given $r_{(n,c_n)}(t)$
-	\begin{enumerate}
-
-	\item Forecasting (or its inverse) of $r_{(n,c_n)}(t)$, given the relative location between microphones $u_n$ and $u_m$ (in the order of milliseconds).
-
-	\item Feature extraction of $r_{(n,c_n)}(t)$ with STFT.
-
-	\item Neural embedding learning from $r_{(n,c_n)}$ features using a CNN. By the last CNN layer, the time axis has been eliminated.
-
-	\item The embedding output and spatial information delta $c_n  - c_m$ are passed to dense layers that produce the parameters for a cascade of biquads that approximate $h(t)$.
-
-	\end{enumerate}
-
-\item Signal processing pipeline to generate $r_{(m,c_m)}(t-T)$ given $r_{(n,c_n)}(t)$
-
-\item Signal processing pipeline to generate $r_{(n,c_n)}(t-T)$ given $r_{(n,c_n)}(t)$
-
 \end{itemize}
-
 
 \bibliography{references}
 \bibliographystyle{plain}
