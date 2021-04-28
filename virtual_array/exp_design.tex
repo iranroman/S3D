@@ -1,7 +1,11 @@
 \documentclass[14pt]{extarticle} 
-\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphicx, geometry, hyperref, lscape, makecell, longtable}
+\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphicx, geometry, hyperref, lscape, makecell, longtable, tikz, tikz-3dplot}
 \usepackage[binary-units=true]{siunitx}
 \renewcommand{\familydefault}{\sfdefault}
+
+\usetikzlibrary{3d}
+\definecolor{dgreen}{RGB}{63,127,0}
+\definecolor{dred}{RGB}{144,14,3}
 
 \geometry{tmargin=.75in, bmargin=.75in, lmargin=.75in, rmargin = .75in}  
 
@@ -26,25 +30,49 @@
 \date{}
 
 \begin{document}
+\tdplotsetmaincoords{60}{50}
 
 \maketitle
 \tableofcontents
 
 \vspace{.25in}
 
+
+\section{Expected contributions}
+
+\begin{itemize}
+
+\item Tool to aggregate and process multiple microphone array datasets with waveform and relative location information.
+
+\item Method to process audio data with high spatial dimensionality
+
+\item Generalized model of spatial audio filter estimation
+
+\end{itemize}
+
+\section{Architectures}
+
+\begin{itemize}
+
+\item U-Net \cite{gao20192}.
+
+\end{itemize}
+
 \section{Dataset}
 
 \begin{itemize}
 
+\item Aggregate of DCASE challenge task 3 datasets for three different years \cite{adavanne2019multi, politis2020dataset, politis2021tau}, 3D-MARCo dataset \cite{lee3d}, and EigenScape dataset \cite{green2017eigenscape}
+
 \item Formatted like the FAIR-Play Dataset \cite{gao2019visualsound}.
 
-\item 10 second clips
+	\begin{itemize}
+	\item 10 second clips
+	\item Resampled to be \SI{16}{\kilo\hertz}.
+	\item Randomly separated into 10 splits of equal size.
+	\item 8 of the 10 splits are used for training, one for validation, and one for testing. 
+	\end{itemize}
 
-\item Resampled to be \SI{16}{\kilo\hertz}.
-
-\item Randomly separated into 10 splits of equal size.
-
-\item 8 of the 10 splits are used for training, one for validation, and one for testing. 
 
 \end{itemize}
 
@@ -58,13 +86,13 @@
 
 \item FFT size of 512. 
 
-\item Training data consists of randomly sampled segments of \SI{0.63}{\second} from each \SI{10}{\second} clip. 
+\item Training data consists of randomly sampled segments of \SI{0.63}{\second} from each \SI{10}{\second} `clip'. 
 
-\item Each segment is normalized to a constant RMS value. 
+\item Each segment is normalized to a constant RMS value (How did \cite{gao2019visualsound} calculate this?)
 
 \item The input is the ``complex spectrogram" with the real and imaginary part in separate channels. 
 
-\item Testing data is a clip processed with a sliding window with hop size \SI{0.05}{\second}.
+\item Testing data is a `clip' processed with a sliding window with hop size \SI{0.05}{\second}.
 
 \item Each input segment has a corresponding set of coordinates for each channel's physical location.
 
@@ -72,6 +100,69 @@
 
 \section{Experiments}
 
+\begin{itemize}
+
+\item Input formats: FFT, MFCC, raw waveform
+
+\item Number of input channels: 1, 2, 3 (consistent chan depth after 1st conv). 
+
+\begin{tikzpicture}[tdplot_main_coords,line join=miter,font=\sffamily]
+\path[tdplot_screen_coords] (-2,0); 
+
+\pgfmathsetmacro{\xstretch}{4}
+\foreach \XX in {1}
+{\begin{scope}[canvas is yz plane at x=\xstretch*0+0.4*\XX]
+\pgfmathtruncatemacro{\fullness}{120-20*\XX}
+\draw[fill=red!\fullness] (-2.5,-2.5) rectangle (2.5,2.5);
+\end{scope}}
+\node[anchor=west] at (\xstretch*0,2.6,2.6){$T\times F\times 1$};
+
+\foreach \XX in {1}
+{\begin{scope}[canvas is yz plane at x=\xstretch*1+0.4*\XX]
+\pgfmathtruncatemacro{\fullness}{120-20*\XX}
+\draw[fill=green!\fullness] (-1,-1) rectangle (1,1);
+\end{scope}}
+\node[anchor=west] at (\xstretch*1,1.1,1.1){$k\times k\times 1$};
+
+\foreach \XX in {1}
+{\begin{scope}[canvas is yz plane at x=\xstretch*2+0.4*\XX]
+\pgfmathtruncatemacro{\fullness}{120-20*\XX}
+\draw[fill=blue!\fullness] (-2.5,-2.5) rectangle (2.5,2.5);
+\end{scope}}
+\node[anchor=west] at (\xstretch*2,2.6,2.6){$T\times F\times 1$};
+\end{tikzpicture}
+
+\begin{tikzpicture}[tdplot_main_coords,line join=miter,font=\sffamily]
+\path[tdplot_screen_coords] (-2,0); 
+
+\pgfmathsetmacro{\xstretch}{4}
+\foreach \XX in {1,2,3}
+{\begin{scope}[canvas is yz plane at x=\xstretch*0+0.4*\XX]
+\pgfmathtruncatemacro{\fullness}{120-20*\XX}
+\draw[fill=red!\fullness] (-2.5,-2.5) rectangle (2.5,2.5);
+\end{scope}}
+\node[anchor=west] at (\xstretch*0,2.6,2.6){$T\times F\times 3$};
+
+\foreach \XX in {1,2,3}
+{\begin{scope}[canvas is yz plane at x=\xstretch*1+0.4*\XX]
+\pgfmathtruncatemacro{\fullness}{120-20*\XX}
+\draw[fill=green!\fullness] (-1,-1) rectangle (1,1);
+\end{scope}}
+\node[anchor=west] at (\xstretch*1,1.1,1.1){$k\times k\times 3$};
+
+\foreach \XX in {1}
+{\begin{scope}[canvas is yz plane at x=\xstretch*2+0.4*\XX]
+\pgfmathtruncatemacro{\fullness}{120-20*\XX}
+\draw[fill=blue!\fullness] (-2.5,-2.5) rectangle (2.5,2.5);
+\end{scope}}
+\node[anchor=west] at (\xstretch*2,2.6,2.6){$T\times F\times 1$};
+\end{tikzpicture}
+
+\item Adding channel coordinates to each input feature.  
+
+\item Convolutions over time X frequency vs time X channels vs time X frequency X channel 
+
+\end{itemize}
 
 
 \bibliography{references}
