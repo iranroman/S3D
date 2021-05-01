@@ -1,5 +1,5 @@
 \documentclass[14pt]{extarticle} 
-\usepackage{authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphicx, geometry, hyperref, lscape, makecell, longtable}
+\usepackage{appendix, authblk, helvet, amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim, bbm, color, graphicx, geometry, hyperref, lscape, makecell, longtable}
 \usepackage[binary-units=true]{siunitx}
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -232,6 +232,40 @@ r_c(t-T) = r_c(t) \ast \delta(T)
 \item Existing approaches for audio signal forecasting include dilated convolutions \cite{oord2016wavenet} and transformers \cite{child2019generating}. 
 
 \end{itemize}
+
+\begin{appendices}
+
+\section{Spherical coordinates}
+
+\begin{itemize}
+
+\item In a 2D space, one can convert from polar to cartesian coordinates using $\rho$, the radius, and $\theta$, the angle (in radians):                
+\begin{align*}
+x &= \rho \cos(\theta) \\
+y &= \rho \sin(\theta)
+\end{align*}
+
+\item Similarly, in a 3D space, one can convert from polar to cartesian coordinates using $\rho \in [0,\infty)$, the radius, and the angles $\theta_1 \in [0,\pi]$ (inclination) and $\theta_2 \in [0,2\pi)$ (azimuth): 
+\begin{align*}
+x &= \rho \sin(\theta_1) \cos(\theta_2) \\
+y &= \rho \sin(\theta_1) \sin(\theta_2) \\
+z &= \rho \cos(\theta_1)
+\end{align*}
+
+\item In general, one can convert an n-dimensional sphere from polar to cartesian coordinates using the radius $\rho \in [0,\infty)$ and $n-1$ angles $\theta_1 \in [0,\pi],\theta_2 \in [0,\pi],\theta_3 \in [0,\pi], \cdots, \theta_{n-2} \in [0,\pi],\theta_{n-1} \in [0,2\pi)$:
+\begin{align*}
+x_1 &= \rho \cos(\theta_1) \\
+x_2 &= \rho \sin(\theta_1) \cos(\theta_2) \\
+x_3 &= \rho \sin(\theta_1) \sin(\theta_2) \cos(\theta_3)\\
+\vdots \\
+x_{n-1} &= \rho \sin(\theta_1) \sin(\theta_2) \cdots \sin(\theta_{n-2}) \cos(\theta{n-1})\\
+x_n &= \rho \sin(\theta_1) \sin(\theta_2) \cdots \sin(\theta_{n-2}) \sin(\theta{n-1})\\
+\end{align*}
+
+\item For more details, see the wikipedia article on the \href{https://en.wikipedia.org/wiki/N-sphere#Spherical_coordinates}{N-sphere coordinates} \cite{enwiki:1018020627}.
+
+\end{itemize}											                                                                                                            
+\end{appendices} 
 
 \bibliography{references}
 \bibliographystyle{plain}
